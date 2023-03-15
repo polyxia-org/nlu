@@ -1,0 +1,11 @@
+{
+  "intent": "GetWeather",
+  "utterances": [
+    "météo",
+    "donne moi la météo",
+    "quel temps fait-il aujourd'hui ?",
+    "est ce qu'il pleut ?",
+    "est-ce qu'il fait beau ?",
+    "Y a t'il du soleil ?"
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "intent": "OrderTacos",
+  "utterances": ["commande moi un tacos", "tacos", "je veux un tacos"]
+}

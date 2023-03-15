@@ -1,0 +1,4 @@
+{
+  "intent": "SayHello",
+  "utterances": ["bonjour", "dis bonjour", "salut", "hello", "je te salue", "bonsoir"]
+}

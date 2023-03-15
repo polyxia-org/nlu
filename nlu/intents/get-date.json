@@ -1,0 +1,10 @@
+{
+  "intent": "GetDate",
+  "utterances": [
+    "quel jour on est?",
+    "date",
+    "donne moi la date du jour",
+    "on est quel jour ?",
+    "quel date ?"
+  ]
+}
