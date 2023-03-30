@@ -17,6 +17,8 @@ poetry install
 poetry run python -m nltk.downloader all
 ```
 
+Rename .env.template file to .env and fill the values
+
 ## Usage
 
 Train : 
@@ -27,8 +29,15 @@ poetry run python nlu/train.py nlu/intents
 Use : 
 ```bash
 # To try the NLU intent detection interactively
-poetry python nlu/cli.py
+poetry run python nlu/cli.py
 
 #To use as a webapp
 poetry run python nlu/app.py
+```
+Alternatively:
+```bash
+# You can also use poetry shell to use the virtualenv and run python commands directly
+poetry shell
+python nlu/cli.py
+python nlu/app.py
 ```
