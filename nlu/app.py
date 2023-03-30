@@ -1,32 +1,38 @@
 import os
-
+from contextlib import asynccontextmanager
 import openai
 import torch
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI
-from model import NeuralNet
 from pydantic import BaseModel
-from utils import bag_of_words, tokenize
-
+from nlu.brain import get_user_intent
+from utils import get_intents
+import logging
 from nlu.functions import INTENTS_HANDLER
 from nlu.functions.chatgpt import ChatBot
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-FILE = "data.pth"
-data = torch.load(FILE)
 
-input_size = data["input_size"]
-hidden_size = data["hidden_size"]
-output_size = data["output_size"]
-all_words = data["all_words"]
-tags = data["tags"]
-model_state = data["model_state"]
+CACHED_INTENTS = {}
 
-model = NeuralNet(input_size, hidden_size, output_size).to(device)
-model.load_state_dict(model_state)
-model.eval()
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Load the ML model
+    
+    # Load intents in cache
+    print("Loading intents in cache")
+    global CACHED_INTENTS
+    CACHED_INTENTS = get_intents("nlu/intents")
+    print(CACHED_INTENTS)
+    yield
+    # Clean up the ML models and release the resources
+
+
+
+logger = logging.getLogger(__name__)
+app = FastAPI(lifespan=lifespan)
+
 
 
 class NluPayload(BaseModel):
@@ -42,20 +48,10 @@ class NluResponse(BaseModel):
 async def nlu(payload: NluPayload):
     user_input = payload.input_text
     print(f'Retrieving intent of "{user_input}"')
-    X = bag_of_words(tokenize(user_input), all_words)
-    X = X.reshape(1, X.shape[0])
-    X = torch.from_numpy(X).to(device)
+    logger.info(f'Retrieving intent of "{user_input}"')
+    intent, prob = get_user_intent(user_input, CACHED_INTENTS)
 
-    out = model(X)
-    _, predicted = torch.max(out, dim=1)
-
-    intent = tags[predicted.item()]
-
-    probs = torch.softmax(out, dim=1)
-    prob = probs[0][predicted.item()]
-
-    print(prob.item())
-    if prob.item() > 0.90:
+    if prob > 0.75:
         print(f"Detected intent: {intent}")
         return NluResponse(intent=intent, response=INTENTS_HANDLER.get(intent)())
     else:
