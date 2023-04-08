@@ -1,9 +1,8 @@
-from nlu.utils import get_intents
-from nlu.brain import get_user_intent
-
+from nlu.brain import debug_user_intent, slot_filling
 from nlu.functions import INTENTS_HANDLER
+from nlu.utils import get_mockup_intents
 
-INTENTS = get_intents("nlu/intents")
+INTENTS = get_mockup_intents("nlu/intents")
 
 print("Enter a query to get the associated intent (type 'quit' to exit)")
 while True:
@@ -11,18 +10,20 @@ while True:
     if payload == "quit":
         break
 
-    intent, prob = get_user_intent(payload, INTENTS)
+    intent, prob = debug_user_intent(payload, INTENTS)
+    print(f"{intent} {prob}")
 
-    if prob > 0.75:
+    if prob > 0.72:
         print(f"Detected intent: {intent}")
-        # print(
-        #     {
-        #         "text": payload,
-        #         "language": "TBD",
-        #         "intent_class": intent,
-        #         "named_entities": named_entities,
-        #     }
-        # )
+
+        print(
+            {
+                "text": payload,
+                "language": "TBD",
+                "intent_class": intent,
+                "named_entities": slot_filling(payload),
+            }
+        )
         print(INTENTS_HANDLER.get(intent)())
     else:
         print("Cannot find an intent that match your query")
