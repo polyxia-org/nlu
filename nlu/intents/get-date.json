@@ -1,5 +1,5 @@
 {
-  "intent": "GetDate",
+  "intent": "get_date",
   "utterances": [
     "quel jour on est?",
     "date",

@@ -1,5 +1,5 @@
 {
-  "intent": "OrderTacos",
+  "intent": "order_tacos",
   "utterances": [
     "commande moi un tacos",
     "tacos",
