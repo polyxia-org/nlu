@@ -8,10 +8,10 @@ from nlu.functions import (
 )
 
 INTENTS_HANDLER = {
-    "GetDate": get_date,
-    "GetWeather": get_weather,
-    "SayHello": say_hello,
-    "OrderTacos": order_tacos,
-    "LightOn": light_on,
-    "Chatbot": chat_bot,
+    "get_date": get_date,
+    "get_weather": get_weather,
+    "say_hello": say_hello,
+    "order_tacos": order_tacos,
+    "light_on": light_on,
+    "chatbot": chat_bot,
 }

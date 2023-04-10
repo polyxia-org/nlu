@@ -1,5 +1,5 @@
 {
-  "intent": "GetWeather",
+  "intent": "get_weather",
   "utterances": [
     "météo",
     "donne moi la météo",

@@ -13,9 +13,8 @@ while True:
     intent, prob = debug_user_intent(payload, INTENTS)
     print(f"{intent} {prob}")
 
-    if prob > 0.72:
+    if intent is not None:
         print(f"Detected intent: {intent}")
-
         print(
             {
                 "text": payload,

@@ -1,5 +1,5 @@
 {
-  "intent": "SayHello",
+  "intent": "say_hello",
   "utterances": [
     "bonjour",
     "dis bonjour",
