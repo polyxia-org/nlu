@@ -5,10 +5,21 @@ To then call the corresponding action (morty functions or LLM chatbot in fallbac
 
 ### Requirements
 
+1. Install poetry
+
 ```bash
 # If poetry is not installed
 curl -sSL https://install.python-poetry.org | python3 -
 ```
+
+2. Create an account on Hugging Face: https://huggingface.co/join?next=%2Fjoeddav%2Fxlm-roberta-large-xnli
+
+3. Agree to share informations on the repo and create a token: https://huggingface.co/joeddav/xlm-roberta-large-xnli
+
+4. Install Hugging Face CLI: `pip install --upgrade huggingface_hub`
+> https://huggingface.co/docs/huggingface_hub/quick-start
+
+5. Login to Hugging Face: `huggingface-cli login` (token role is `read`)
 
 ## Installation
 
