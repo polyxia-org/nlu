@@ -1,7 +1,10 @@
+import os
+
 import openai
+import requests
 from fastapi import APIRouter
 
-from nlu.brain import get_user_intent
+from nlu.brain import get_params, get_user_intent
 from nlu.functions.chatgpt import ChatBot
 from nlu.functions.intents import INTENTS_HANDLER
 from nlu.schemas.nlu import NluPayload, NluResponse
@@ -16,8 +19,13 @@ async def nlu(payload: NluPayload):
     intent, prob = await get_user_intent(user_input)
     print(f"Detected intent: {intent} {prob}")
     if intent is not None:
-        # TODO: call morty serverless instance
-        return NluResponse(intent=intent, response=INTENTS_HANDLER.get(intent)())
+        params = await get_params(intent, user_input)
+        res = requests.get(
+            f"{os.getenv('FUNCTIONS_GATEWAY')}/invoke/{intent}", params=params
+        )
+        if res.ok:
+            return NluResponse(intent=intent, response=res.text)
+        return NluResponse(intent=intent, response="Sorry an error occurred.")
     else:
         if openai.api_key is None:
             return NluResponse(

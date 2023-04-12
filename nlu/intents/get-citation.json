@@ -1,0 +1,9 @@
+{
+    "intent": "get_quote",
+    "utterances": [
+      "Donne moi une citation",
+      "Fait moi une citation",
+      "Peux tu me donner une phrase célèbre",
+      "Give me a quote"
+    ]
+  }
