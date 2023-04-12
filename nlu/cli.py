@@ -1,4 +1,4 @@
-from nlu.brain import debug_user_intent, slot_filling
+from nlu.brain import debug_user_intent, named_entity_recognition
 from nlu.functions import INTENTS_HANDLER
 from nlu.utils import get_mockup_intents
 
@@ -20,9 +20,12 @@ while True:
                 "text": payload,
                 "language": "TBD",
                 "intent_class": intent,
-                "named_entities": slot_filling(payload),
+                "named_entities": named_entity_recognition(payload),
             }
         )
-        print(INTENTS_HANDLER.get(intent)())
+        function_to_call = INTENTS_HANDLER.get(intent)
+        print(function_to_call)
+        if function_to_call:
+            print(function_to_call())
     else:
         print("Cannot find an intent that match your query")

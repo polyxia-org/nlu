@@ -10,6 +10,7 @@ from transformers import (
     pipeline,
 )
 
+from nlu.crud.skills import CRUDSkills
 from nlu.utils import get_db_intents, slot_uniformization
 
 #### Intent Classifier
@@ -110,6 +111,21 @@ async def get_user_intent(user_input: str) -> Tuple[str, float]:
     return None, None
 
 
-def slot_filling(user_input: str) -> str:
+def named_entity_recognition(user_input: str) -> str:
     ner = predict_ner(user_input)
     return slot_uniformization(ner)
+
+
+async def get_params(intent: str, user_input: str):
+    """Get parameters from user input"""
+    skill = await CRUDSkills.get_by_name(intent)
+    slots = skill[0].get("slots")
+    if not slots:
+        return {}
+    ner = named_entity_recognition(user_input)
+    slots = [slot["type"] for slot in slots]
+    params = {}
+    for slot_type, value in ner:
+        if slot_type in slots:
+            params[slot_type] = value
+    return params
