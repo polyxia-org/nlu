@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  surrealdb:
+    image: surrealdb/surrealdb:latest
+    container_name: surrealdb
+    restart: unless-stopped
+    command: start --pass root file:/data/database.db
+    ports:
+      - 8000:8000
+    volumes:
+      - ./data:/data
+
+  api-server:
+    depends_on:
+      - surrealdb
+    image: ghcr.io/polyxia-org/nlu:latest
+    container_name: api-server
+    ports:
+      - 8080:8080
+    env_file:
+      - .env.template
+    environment:
+      DATABASE_URL: ws://surrealdb:8000/rpc
