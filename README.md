@@ -17,7 +17,8 @@ curl -sSL https://install.python-poetry.org | python3 -
 3. Agree to share informations on the repo and create a token: https://huggingface.co/joeddav/xlm-roberta-large-xnli
 
 4. Install Hugging Face CLI: `pip install --upgrade huggingface_hub`
-> https://huggingface.co/docs/huggingface_hub/quick-start
+
+   > https://huggingface.co/docs/huggingface_hub/quick-start
 
 5. Login to Hugging Face: `huggingface-cli login` (token role is `read`)
 
@@ -42,4 +43,20 @@ poetry run python nlu/cli.py
 #To use as a webapp (first launch a surrealdb instance)
 docker run --rm --pull always -p 8000:8000 surrealdb/surrealdb:latest start --pass root
 poetry run python nlu/app.py
+```
+
+### Run with Docker:
+
+Using remote image :
+
+```bash
+docker compose up -d
+```
+
+Building locally (set your Hugging Face token) :
+
+```bash
+export HUGGING_FACE_HUB_TOKEN=<my_token>
+docker buildx build --secret id=HUGGING_FACE_HUB_TOKEN -t ghcr.io/polyxia-org/nlu:latest .
+docker compose up -d
 ```

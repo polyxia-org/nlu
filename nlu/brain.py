@@ -25,8 +25,10 @@ intent_classifier = pipeline(
 
 #### NER Extractor
 model_name_ner = "qanastek/XLMRoberta-Alexa-Intents-NER-NLU"
-tokenizer_ner = AutoTokenizer.from_pretrained(model_name_ner)
-model_ner = AutoModelForTokenClassification.from_pretrained(model_name_ner)
+tokenizer_ner = AutoTokenizer.from_pretrained(model_name_ner, local_files_only=True)
+model_ner = AutoModelForTokenClassification.from_pretrained(
+    model_name_ner, local_files_only=True
+)
 predict_ner = TokenClassificationPipeline(model=model_ner, tokenizer=tokenizer_ner)
 
 
@@ -81,6 +83,8 @@ async def get_user_intent(user_input: str) -> Tuple[str, float]:
 
     # zero-shot classification
     candidate_labels = list(intents_list.keys())
+    if not candidate_labels:
+        return None, None
     intent_classified = intent_classifier(
         user_input, candidate_labels, multi_label=True
     )

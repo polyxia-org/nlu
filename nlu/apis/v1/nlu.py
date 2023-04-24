@@ -25,6 +25,7 @@ async def nlu(payload: NluPayload):
         )
         if res.ok:
             return NluResponse(intent=intent, response=res.text)
+        print(f"Error: {res.text}")
         return NluResponse(intent=intent, response="Sorry an error occurred.")
     else:
         if openai.api_key is None:
