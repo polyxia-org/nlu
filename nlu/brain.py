@@ -91,8 +91,8 @@ async def get_user_intent(user_input: str) -> Tuple[str, float]:
     intent_classified = intent_classifier(
         user_input, candidate_labels, multi_label=True
     )
-    if intent_classified["scores"][0] > 0.81:
-        logger.info(f"Intent classifier {intent_classified['labels'][0]} {intent_classified['scores'][0]}")
+    logger.info(f"Intent classifier {intent_classified['labels'][0]} {intent_classified['scores'][0]}")
+    if intent_classified["scores"][0] > 0.81:        
         return intent_classified["labels"][0], intent_classified["scores"][0]
 
     # sentence similarity
@@ -112,10 +112,11 @@ async def get_user_intent(user_input: str) -> Tuple[str, float]:
         cosine_similarities[intent] = (
             torch.max(similarity) * 3 + torch.mean(similarity)
         ) / 4
-    if max(cosine_similarities.values()) > 0.72:
-        most_similar_intent = max(cosine_similarities, key=cosine_similarities.get)
-        logger.info(f"Sentence similarity {most_similar_intent} {max(cosine_similarities.values())}")
-        return most_similar_intent, max(cosine_similarities.values())
+    most_similar_intent = max(cosine_similarities, key=cosine_similarities.get)
+    most_similar_intent_score = cosine_similarities[most_similar_intent]
+    logger.info(f"Sentence similarity {most_similar_intent} {most_similar_intent_score}")
+    if most_similar_intent_score > 0.72:        
+        return most_similar_intent, most_similar_intent_score
 
     return None, None
 

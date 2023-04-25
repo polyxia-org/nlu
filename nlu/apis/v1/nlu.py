@@ -43,7 +43,7 @@ async def nlu(payload: NluPayload):
         # TODO: use our own chatbot
         try:
             llm = ChatBot(
-                "You are a helpful voice assistant like Alexa, or Google Assistant, named Polyxia, your answers are precise and concise."
+                "You are a helpful voice assistant like Alexa, or Google Assistant, named Polyxia, your answers are precise and concise. Response are limited to 280 characters."
             )
         except Exception as e:
             raise HTTPException(status_code=500, detail="Unable to contact the chatbot")
