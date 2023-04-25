@@ -12,6 +12,9 @@ from transformers import (
 
 from nlu.crud.skills import CRUDSkills
 from nlu.utils import get_db_intents, slot_uniformization
+import logging 
+
+logger = logging.getLogger(__name__)
 
 #### Intent Classifier
 # Sentence-BERT: https://arxiv.org/pdf/1908.10084.pdf
@@ -89,6 +92,7 @@ async def get_user_intent(user_input: str) -> Tuple[str, float]:
         user_input, candidate_labels, multi_label=True
     )
     if intent_classified["scores"][0] > 0.81:
+        logger.info(f"Intent classifier {intent_classified['labels'][0]} {intent_classified['scores'][0]}")
         return intent_classified["labels"][0], intent_classified["scores"][0]
 
     # sentence similarity
@@ -110,6 +114,7 @@ async def get_user_intent(user_input: str) -> Tuple[str, float]:
         ) / 4
     if max(cosine_similarities.values()) > 0.72:
         most_similar_intent = max(cosine_similarities, key=cosine_similarities.get)
+        logger.info(f"Sentence similarity {most_similar_intent} {max(cosine_similarities.values())}")
         return most_similar_intent, max(cosine_similarities.values())
 
     return None, None
