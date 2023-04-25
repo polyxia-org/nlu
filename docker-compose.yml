@@ -22,3 +22,6 @@ services:
       - .env.template
     environment:
       DATABASE_URL: ws://surrealdb:8000/rpc
+      HUGGING_FACE_HUB_TOKEN: <your token>
+      FUNCTIONS_GATEWAY: <your gateway>
+      OPENAI_API_KEY: <your key>
