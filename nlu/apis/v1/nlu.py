@@ -47,6 +47,4 @@ async def nlu(payload: NluPayload):
             )
         except Exception as e:
             raise HTTPException(status_code=500, detail="Unable to contact the chatbot")
-        return NluResponse(
-            intent="Chatbot", response=INTENTS_HANDLER.get("Chatbot")(llm, user_input)
-        )
+        return NluResponse(intent="chatbot", response=llm.ask(user_input))
