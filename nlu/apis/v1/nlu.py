@@ -25,7 +25,7 @@ async def nlu(payload: NluPayload):
     if intent is not None:
         params = await get_params(intent, user_input)
         res = requests.get(
-            f"{os.getenv('FUNCTIONS_GATEWAY')}/invoke/{intent}", params=params
+            f"{os.getenv('FUNCTIONS_GATEWAY')}/functions/{intent}/invoke", params=params
         )
         if res.ok:
             return NluResponse(intent=intent, response=res.text)
