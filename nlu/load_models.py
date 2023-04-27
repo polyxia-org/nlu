@@ -8,7 +8,7 @@ from transformers import (
 )
 
 # Intent classifier
-model_name_intent = "joeddav/xlm-roberta-large-xnli"
+model_name_intent = "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli"
 intent_classifier = pipeline("zero-shot-classification", model=model_name_intent)
 
 # Sentence similarity
