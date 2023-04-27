@@ -16,9 +16,7 @@ COPY ./nlu nlu
 RUN poetry config virtualenvs.create false \
   && poetry install
 
-RUN --mount=type=secret,id=HUGGING_FACE_HUB_TOKEN \
-  export HUGGING_FACE_HUB_TOKEN=$(cat /run/secrets/HUGGING_FACE_HUB_TOKEN) \
-  && python nlu/load_models.py
+RUN python nlu/load_models.py
 
 EXPOSE 8080
 

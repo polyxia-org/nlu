@@ -1,0 +1,8 @@
+{
+    "intent": "light_off",
+    "utterances": [
+      "éteint la lumière",
+      "arrête la lampe du salon",
+      "coupe la lumière"
+    ]
+  }

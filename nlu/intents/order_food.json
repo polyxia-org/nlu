@@ -1,0 +1,9 @@
+{
+  "intent": "order_food",
+  "utterances": [
+    "commande moi un tacos",
+    "j'ai faim",
+    "je veux un tacos",
+    "livre moi une pizza"
+  ]
+}

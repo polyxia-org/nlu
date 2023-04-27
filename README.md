@@ -56,7 +56,6 @@ docker compose up -d
 Building locally (set your Hugging Face token) :
 
 ```bash
-export HUGGING_FACE_HUB_TOKEN=<my_token>
-docker buildx build --secret id=HUGGING_FACE_HUB_TOKEN -t ghcr.io/polyxia-org/nlu:latest .
+docker buildx build -t ghcr.io/polyxia-org/nlu:latest .
 docker compose up -d
 ```
