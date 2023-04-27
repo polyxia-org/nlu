@@ -16,14 +16,14 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-#### Intent Classifier
+#### Sentence similarity
 # Sentence-BERT: https://arxiv.org/pdf/1908.10084.pdf
 # https://github.com/microsoft/MPNet
 model_sentence_similarity = SentenceTransformer("paraphrase-multilingual-mpnet-base-v2")
 
-# XLM-RoBERTa: https://arxiv.org/pdf/1911.02116.pdf
+#### Zero-shot Intent Classifier
 intent_classifier = pipeline(
-    "zero-shot-classification", model="joeddav/xlm-roberta-large-xnli"
+    "zero-shot-classification", model="MoritzLaurer/mDeBERTa-v3-base-mnli-xnli"
 )
 
 #### NER Extractor
